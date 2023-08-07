@@ -166,6 +166,7 @@ while run:
     center_x = player_x + 23
     center_y = player_y + 24
     turns_allowed = check_position(center_x, center_y)
+    player_x, player_y = move_player(player_x, player_y)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -191,14 +192,14 @@ while run:
             if event.key == pygame.K_DOWN and direction_command == 3:
                 direction_command =  direction
 
-        for i in range(4):
-            if direction_command == i and turns_allowed[i]:
-                direction = i
+    for i in range(4):
+        if direction_command == i and turns_allowed[i]:
+            direction = i
 
-        if player_x > 900:
-            player_x = -47
-        elif player_x < -50:
-            player_x = 897
+    if player_x > 900:
+        player_x = -47
+    elif player_x < -50:
+        player_x = 897
 
     pygame.display.flip()
 pygame.quit()
