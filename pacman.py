@@ -91,5 +91,15 @@ while run:
             print('quitting game')
             run = False
 
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                direction = 0
+            if event.key == pygame.K_LEFT:
+                direction =  1
+            if event.key == pygame.K_UP:
+                direction = 2
+            if event.key == pygame.K_DOWN:
+                direction =  3
+
     pygame.display.flip()
 pygame.quit()
