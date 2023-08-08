@@ -39,11 +39,16 @@ power_counter = 0
 eaten_ghost = [False, False, False, False]
 startup_counter = 0
 moving = False
+lives = 3
 
 
 def draw_misc():
     score_text = font.render(f'Score: {score}', True, 'white')
     screen.blit(score_text, (10, 920))
+    if powerup:
+        pygame.draw.circle(screen, 'blue', (140, 930), 15)
+    for i in range(lives):
+        screen.blit(pygame.transform.scale(player_images[0], (30, 30)), (650 + i * 40, 915))
 
 #check if colliding with white dots
 def check_collisions(scr, power, power_count, eaten_ghosts):
