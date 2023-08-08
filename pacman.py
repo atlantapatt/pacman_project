@@ -34,6 +34,11 @@ turns_allowed = [False, False, False, False]
 direction_command = 0
 player_speed = 2
 score = 0
+powerup = False
+power_counter = 0
+eaten_ghost = [False, False, False, False]
+startup_counter = 0
+moving = False
 
 
 def draw_misc():
@@ -41,7 +46,7 @@ def draw_misc():
     screen.blit(score_text, (10, 920))
 
 #check if colliding with white dots
-def check_collisions(scr):
+def check_collisions(scr, power, power_count, eaten_ghosts):
     num1 = (HEIGHT - 50) // 32
     num2 = WIDTH // 30
     if 0 < player_x < 870:
@@ -51,7 +56,10 @@ def check_collisions(scr):
         if level[center_y // num1][center_x // num2] == 2:
             level[center_y // num1][center_x // num2] = 0
             scr += 50
-    return scr
+            power = True
+            power_count = 0
+            eaten_ghosts = [False, False, False, False]
+    return scr, power, power_count, eaten_ghosts
 
 def draw_board(lvl):
     num1 = ((HEIGHT -  50) // 32)
@@ -178,6 +186,18 @@ while run:
     else:
         counter = 0
         flicker = True
+    if powerup and power_counter < 600:
+        power_counter += 1
+    elif powerup and power_counter >= 600:
+        power_counter = 0
+        powerup = False
+        eaten_ghost = [False, False, False, False]
+    
+    if startup_counter < 180:
+        moving = False
+        startup_counter += 1
+    else:
+        moving = True
 
 
     screen.fill('black')
@@ -187,8 +207,9 @@ while run:
     center_x = player_x + 23
     center_y = player_y + 24
     turns_allowed = check_position(center_x, center_y)
-    player_x, player_y = move_player(player_x, player_y)
-    score = check_collisions(score)
+    if moving:
+        player_x, player_y = move_player(player_x, player_y)
+    score, powerup, power_counter, eaten_ghost = check_collisions(score, powerup, power_counter, eaten_ghost)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
