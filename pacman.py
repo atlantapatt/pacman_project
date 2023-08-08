@@ -18,7 +18,7 @@ timer = pygame.time.Clock()
 fps = 60
 level = boards
 color = 'blue'
-# font = pygame.font.Font('freesansbold.ttf', 20)
+font = pygame.font.Font('freesansbold.ttf', 20)
 PI = math.pi
 player_images = []
 for i in range (1, 5):
@@ -34,6 +34,11 @@ turns_allowed = [False, False, False, False]
 direction_command = 0
 player_speed = 2
 score = 0
+
+
+def draw_misc():
+    score_text = font.render(f'Score: {score}', True, 'white')
+    screen.blit(score_text, (10, 920))
 
 #check if colliding with white dots
 def check_collisions(scr):
@@ -178,6 +183,7 @@ while run:
     screen.fill('black')
     draw_board(boards)
     draw_player()
+    draw_misc()
     center_x = player_x + 23
     center_y = player_y + 24
     turns_allowed = check_position(center_x, center_y)
