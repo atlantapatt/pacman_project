@@ -3,7 +3,7 @@ import os
 os.environ['SDL_AUDIODRIVER'] = 'dsp'
 
 from board import boards
-from Ghost_Class import Ghost
+# from Ghost_Class import Ghost
 import pygame
 import math
 
@@ -25,11 +25,11 @@ player_images = []
 for i in range (1, 5):
     player_images.append(pygame.transform.scale(pygame.image.load(f'assets/player_images/{i}.png'), (45,45)))
 ghost_red = pygame.transform.scale(pygame.image.load('assets/ghost_images/red.png'), (45,45))
-ghost_blue = pygame.transform.scale(pygame.image.load('assets/ghost_images_images/blue.png'), (45,45))
-ghost_orange = pygame.transform.scale(pygame.image.load('assets/ghost_images_images/orange.png'), (45,45))
-ghost_pink = pygame.transform.scale(pygame.image.load('assets/ghost_images_images/pink.png'), (45,45))
-ghost_spooked = pygame.transform.scale(pygame.image.load('assets/ghost_images_images/powerup.png'), (45,45))
-ghost_dead = pygame.transform.scale(pygame.image.load('assets/ghost_images_images/dead.png'), (45,45))
+ghost_blue = pygame.transform.scale(pygame.image.load('assets/ghost_images/blue.png'), (45,45))
+ghost_orange = pygame.transform.scale(pygame.image.load('assets/ghost_images/orange.png'), (45,45))
+ghost_pink = pygame.transform.scale(pygame.image.load('assets/ghost_images/pink.png'), (45,45))
+ghost_spooked = pygame.transform.scale(pygame.image.load('assets/ghost_images/powerup.png'), (45,45))
+ghost_dead = pygame.transform.scale(pygame.image.load('assets/ghost_images/dead.png'), (45,45))
 
 
 red_x = 56
@@ -37,14 +37,14 @@ red_y = 58
 red_direction = 0
 
 blue_x = 448
-blue_y = 438
+blue_y = 388
 blue_direction = 2
 
 orange_x = 448
 orange_y = 438
 orange_direction = 2
 
-pink_x = 448
+pink_x = 440
 pink_y = 438
 pink_direction = 2
 
@@ -79,7 +79,37 @@ lives = 3
 
 
 
+class Ghost:
+
+    def __init__(self, x_coord, y_coord, target, speed, img, direction, dead, box, id):
+        self.x_pos = x_coord
+        self.y_pos = y_coord
+        self.center_x = self.x_pos + 22
+        self.center_y = self.y_pos + 22
+        self.target = target
+        self.speed = speed
+        self.img = img
+        self.direction = direction
+        self.dead = dead
+        self.in_box = box
+        self.id = id
+        self.turns, self.in_box = self.check_collisions()
+        self.rect = self.draw()
+
+    def draw(self):
+        if (not powerup and not self.dead)  or (eaten_ghost[self.id] and powerup and not self.dead):
+            screen.blit(self.img, (self.x_pos, self.y_pos))
+        elif powerup and not self.dead and not eaten_ghost[self.id]:
+            screen.blit(ghost_spooked, (self.x_pos, self.y_pos))
+        else:
+            screen.blit(ghost_dead, (self.x_pos, self.y_pos))
+        ghost_rect = pygame.rect.Rect((self.center_x - 18, self.center_y - 18), (36,36))
+        return ghost_rect
     
+    def check_collisions(self):
+        self.turns = [False, False, False, False]
+        self.in_box = True
+        return self.turns, self.in_box 
 
 
 def draw_misc():
@@ -248,10 +278,14 @@ while run:
     screen.fill('black')
     draw_board(boards)
     draw_player()
-    red = Ghost(red_x, red_y, targets[0], ghost_speed, ghost_red, red_direction, red_dead, red_box, 0)
-    blue = Ghost(blue_x, blue_y, targets[0], ghost_speed, ghost_blue, blue_direction, blue_dead, blue_box, 1)
-    orange = Ghost(orange_x, orange_y, targets[0], ghost_speed, ghost_orange, orange_direction, orange_dead, orange_box, 2)
-    pink = Ghost(pink_x, pink_y, targets[0], ghost_speed, ghost_pink, pink_direction, pink_dead, pink_box, 3)
+    red = Ghost(red_x, red_y, targets[0], ghost_speed, ghost_red, red_direction, red_dead,
+                 red_box, 0)
+    blue = Ghost(blue_x, blue_y, targets[0], ghost_speed, ghost_blue, blue_direction, blue_dead,
+                 blue_box, 1)
+    orange = Ghost(orange_x, orange_y, targets[0], ghost_speed, ghost_orange, orange_direction, orange_dead,
+                    orange_box, 2)
+    pink = Ghost(pink_x, pink_y, targets[0], ghost_speed, ghost_pink, pink_direction, pink_dead,
+                  pink_box, 3)
 
     
     draw_misc()
