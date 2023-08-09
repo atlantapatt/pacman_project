@@ -3,6 +3,7 @@ import os
 os.environ['SDL_AUDIODRIVER'] = 'dsp'
 
 from board import boards
+from Ghost_Class import Ghost
 import pygame
 import math
 
@@ -23,6 +24,29 @@ PI = math.pi
 player_images = []
 for i in range (1, 5):
     player_images.append(pygame.transform.scale(pygame.image.load(f'assets/player_images/{i}.png'), (45,45)))
+ghost_red = pygame.transform.scale(pygame.image.load('assets/ghost_images/red.png'), (45,45))
+ghost_blue = pygame.transform.scale(pygame.image.load('assets/ghost_images_images/blue.png'), (45,45))
+ghost_orange = pygame.transform.scale(pygame.image.load('assets/ghost_images_images/orange.png'), (45,45))
+ghost_pink = pygame.transform.scale(pygame.image.load('assets/ghost_images_images/pink.png'), (45,45))
+ghost_spooked = pygame.transform.scale(pygame.image.load('assets/ghost_images_images/powerup.png'), (45,45))
+ghost_dead = pygame.transform.scale(pygame.image.load('assets/ghost_images_images/dead.png'), (45,45))
+
+
+red_x = 56
+red_y = 58
+red_direction = 0
+
+blue_x = 448
+blue_y = 438
+blue_direction = 2
+
+orange_x = 448
+orange_y = 438
+orange_direction = 2
+
+pink_x = 448
+pink_y = 438
+pink_direction = 2
 
 player_x = 450
 player_y = 663
@@ -37,9 +61,25 @@ score = 0
 powerup = False
 power_counter = 0
 eaten_ghost = [False, False, False, False]
+targets = [(player_x, player_y), (player_x, player_y), (player_x, player_y), (player_x, player_y)]
+
+red_dead = False
+blue_dead = False
+orange_dead = False
+pink_dead = False
+red_box = False
+blue_box = False
+orange_box = False
+pink_box = False
+ghost_speed = 2
+
 startup_counter = 0
 moving = False
 lives = 3
+
+
+
+    
 
 
 def draw_misc():
@@ -208,6 +248,12 @@ while run:
     screen.fill('black')
     draw_board(boards)
     draw_player()
+    red = Ghost(red_x, red_y, targets[0], ghost_speed, ghost_red, red_direction, red_dead, red_box, 0)
+    blue = Ghost(blue_x, blue_y, targets[0], ghost_speed, ghost_blue, blue_direction, blue_dead, blue_box, 1)
+    orange = Ghost(orange_x, orange_y, targets[0], ghost_speed, ghost_orange, orange_direction, orange_dead, orange_box, 2)
+    pink = Ghost(pink_x, pink_y, targets[0], ghost_speed, ghost_pink, pink_direction, pink_dead, pink_box, 3)
+
+    
     draw_misc()
     center_x = player_x + 23
     center_y = player_y + 24
