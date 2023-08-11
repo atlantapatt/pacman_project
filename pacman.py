@@ -97,6 +97,7 @@ class Ghost:
         self.rect = self.draw()
 
     def draw(self):
+        #draw ghosts and change image when player collects powerup
         if (not powerup and not self.dead)  or (eaten_ghost[self.id] and powerup and not self.dead):
             screen.blit(self.img, (self.x_pos, self.y_pos))
         elif powerup and not self.dead and not eaten_ghost[self.id]:
@@ -113,10 +114,27 @@ class Ghost:
         
         self.turns = [False, False, False, False]
         if self.center_x // 30 < 29:
+            #Right and left collisions for ghosts
             if level[self.center_y//num1][(self.center_x - num3)//num2] < 3 \
                 or (level[self.center_y//num1][(self.center_x - num3)//num2] == 9 and (
             self.in_box or self.dead)):
                 self.turns[1] = True
+            if level[self.center_y//num1][(self.center_x + num3)//num2] < 3 \
+                or (level[self.center_y//num1][(self.center_x + num3)//num2] == 9 and (
+            self.in_box or self.dead)):
+                self.turns[0] = True
+            #Up and down collisions for ghosts
+            if level[self.center_y + num3//num1][(self.center_x)//num2] < 3 \
+                or (level[self.center_y + num3//num1][(self.center_x)//num2] == 9 and (
+            self.in_box or self.dead)):
+                self.turns[3] = True
+            if level[self.center_y - num3//num1][(self.center_x)//num2] < 3 \
+                or (level[self.center_y - num3//num1][(self.center_x)//num2] == 9 and (
+            self.in_box or self.dead)):
+                self.turns[2] = True
+            if self.direction == 2 or self.direction == 3:
+                if 12 <= self.center_x % num2 <=18:
+                    if level[(center_y + num3)]
 
         return self.turns, self.in_box 
 
