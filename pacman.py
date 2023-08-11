@@ -107,8 +107,17 @@ class Ghost:
         return ghost_rect
     
     def check_collisions(self):
+        num1 = ((HEIGHT -50)// 32)
+        num2 = (WIDTH//30)
+        num3 = 15
+        
         self.turns = [False, False, False, False]
-        self.in_box = True
+        if self.center_x // 30 < 29:
+            if level[self.center_y//num1][(self.center_x - num3)//num2] < 3 \
+                or (level[self.center_y//num1][(self.center_x - num3)//num2] == 9 and (
+            self.in_box or self.dead)):
+                self.turns[1] = True
+
         return self.turns, self.in_box 
 
 
