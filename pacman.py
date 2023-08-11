@@ -110,6 +110,7 @@ class Ghost:
     def check_collisions(self):
         num1 = ((HEIGHT -50)// 32)
         num2 = (WIDTH//30)
+        ##num 3 is half the width of the sprites' bodies
         num3 = 15
         
         self.turns = [False, False, False, False]
@@ -134,7 +135,24 @@ class Ghost:
                 self.turns[2] = True
             if self.direction == 2 or self.direction == 3:
                 if 12 <= self.center_x % num2 <=18:
-                    if level[(center_y + num3)]
+                    if level[(center_y + num3)//num1][self.center_x//num2] < 3 \
+                        or (level[(center_y + num3)//num1][self.center_x//num2] == 9 and (
+                            self.in_box or self.dead)):
+                        self.turns[3] = True
+                    if level[(center_y - num3)//num1][self.center_x//num2] < 3 \
+                        or (level[(center_y - num3)//num1][self.center_x//num2] == 9 and (
+                            self.in_box or self.dead)):
+                        self.turns[2] = True
+                if 12 <= self.center_x % num1 <=18:
+                    if level[(center_y)//num1][(self.center_x - num3)//num2] < 3 \
+                        or (level[(center_y)//num1][(self.center_x - num3)//num2] == 9 and (
+                            self.in_box or self.dead)):
+                        self.turns[1] = True
+                    if level[(center_y)//num1][(self.center_x + num3)//num2] < 3 \
+                        or (level[(center_y)//num1][(self.center_x + num3)//num2] == 9 and (
+                            self.in_box or self.dead)):
+                        self.turns[0] = True
+                
 
         return self.turns, self.in_box 
 
