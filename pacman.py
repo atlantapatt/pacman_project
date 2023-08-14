@@ -320,6 +320,11 @@ class Ghost:
                     self.x_pos -= self.speed
                 else:
                     self.y_pos += self.speed
+        if self.x_pos < -30:
+            self.x_pos = 900
+        elif self.x_pos > 900:
+            self.x_pos - 30
+        return self.x_pos, self.y_pos, self.direction
 
 
 def draw_misc():
