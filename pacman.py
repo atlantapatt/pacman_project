@@ -126,11 +126,11 @@ class Ghost:
                 self.turns[0] = True
             #Up and down collisions for ghosts
             if level[(self.center_y + num3)//num1][(self.center_x)//num2] < 3 \
-                or (level[self.center_y + num3//num1][(self.center_x)//num2] == 9 and (
+                or (level[(self.center_y + num3)//num1][(self.center_x)//num2] == 9 and (
             self.in_box or self.dead)):
                 self.turns[3] = True
             if level[(self.center_y - num3)//num1][(self.center_x)//num2] < 3 \
-                or (level[self.center_y - num3//num1][(self.center_x)//num2] == 9 and (
+                or (level[(self.center_y - num3)//num1][(self.center_x)//num2] == 9 and (
             self.in_box or self.dead)):
                 self.turns[2] = True
 
