@@ -186,6 +186,14 @@ class Ghost:
 
         return self.turns, self.in_box 
 
+    def move_orange(self):
+        if self.direction == 0:
+            if self.target[0] > self.x_pos and self.turns[0]:
+                self.x_pos += self.speed
+            elif not self.turns[0]:
+                if self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
 
 def draw_misc():
     score_text = font.render(f'Score: {score}', True, 'white')
@@ -326,7 +334,7 @@ if run == True:
     print('game is running')
 
 while run:
-    timer.tick(fps)
+    timer.tick(fps) 
     if counter < 19:
         counter  += 1
         if counter > 3:
