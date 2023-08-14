@@ -194,6 +194,21 @@ class Ghost:
                 if self.target[1] > self.y_pos and self.turns[3]:
                     self.direction = 3
                     self.y_pos += self.speed
+            elif self.target[1] < self.y_pos and self.turns[2]:
+                self.direction = 2
+                self.y_pos -= self.speed
+            elif self.target[0] < self.x_pos and self.turns[1]:
+                self.direction = 1
+                self.x_pos -= self.speed
+            elif self.turns[3]:
+                self.direction = 3
+                self.y_pos += self.speed
+            elif self.turns[2]:
+                self.direction = 2
+                self.y_pos -= self.speed
+            elif self.turns[1]:
+                self.direction = 1
+                self.x_pos -= self.speed
 
 def draw_misc():
     score_text = font.render(f'Score: {score}', True, 'white')
