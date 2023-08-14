@@ -219,40 +219,75 @@ class Ghost:
                     self.y_pos -= self.speed
                 else:
                     self.x_pos += self.speed
-
+        #direction for moving left
         elif self.direction == 1:
+            if self.target[1] > self.y_pos and self.turns[3]:
+                self.direction = 3
+            elif self.target[0] < self.x_pos and self.turns[1]:
+                self.x_pos += self.speed
+            elif not self.turns[1]:
                 if self.target[1] > self.y_pos and self.turns[3]:
                     self.direction = 3
-                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.y_pos += self.speed
+                elif self.target[1] < self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
                     self.x_pos += self.speed
-                elif not self.turns[1]:
-                    if self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.target[1] < self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    elif self.target[0] > self.x_pos and self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
-                    elif self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    elif self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    elif self.turns[0]:
-                        self.direction = 0
-                        self.x_pos += self.speed
+                elif self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+            elif self.turns[1]:
+                if self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                if self.target[1] > self.y_pos and self.turns[2]:
+                    self.direction = 2
+                    self.y_pos -= self.speed
+                else:
+                    self.x_pos -= self.speed
+        #direction for moving up
+        elif self.direction == 2:
+            if self.target[0] < self.x_pos and self.turns[0]:
+                self.direction = 0
+                self.x_pos -= self.speed
+            elif self.target[1] < self.y_pos and self.turns[2]:
+                self.y_pos -= self.speed
+            elif not self.turns[2]:
+                if self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                elif self.target[1] > self.y_pos and self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
+                elif self.turns[3]:
+                    self.direction = 3
+                    self.y_pos += self.speed
                 elif self.turns[1]:
-                    if self.target[1] > self.y_pos and self.turns[3]:
-                        self.direction = 3
-                        self.y_pos += self.speed
-                    if self.target[1] > self.y_pos and self.turns[2]:
-                        self.direction = 2
-                        self.y_pos -= self.speed
-                    else:
-                        self.x_pos -= self.speed
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                elif self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+            elif self.turns[2]:
+                if self.target[0] > self.x_pos and self.turns[0]:
+                    self.direction = 0
+                    self.x_pos += self.speed
+                elif self.target[0] < self.x_pos and self.turns[1]:
+                    self.direction = 1
+                    self.x_pos -= self.speed
+                else:
+                    self.y_pos -= self.speed
 
 
 def draw_misc():
