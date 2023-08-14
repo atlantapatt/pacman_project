@@ -320,6 +320,7 @@ class Ghost:
                     self.x_pos -= self.speed
                 else:
                     self.y_pos += self.speed
+        #if goes off screen 
         if self.x_pos < -30:
             self.x_pos = 900
         elif self.x_pos > 900:
@@ -507,6 +508,11 @@ while run:
     turns_allowed = check_position(center_x, center_y)
     if moving:
         player_x, player_y = move_player(player_x, player_y)
+        orange_x, orange_y, orange_direction = orange.move_orange()
+        blue_x, blue_y, blue_direction = blue.move_orange()
+        red_x, red_y, red_direction = red.move_orange()
+        pink_x, pink_y, pink_direction = pink.move_orange()
+
     score, powerup, power_counter, eaten_ghost = check_collisions(score, powerup, power_counter, eaten_ghost)
     
     for event in pygame.event.get():
