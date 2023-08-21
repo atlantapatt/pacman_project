@@ -462,6 +462,38 @@ def move_player(play_x, play_y):
         play_y += player_speed
     return play_x, play_y
 
+def get_targets():
+    if player_x < 450:
+        runaway_x = 980
+    else:
+        runaway_x = 0
+    if player_y < 450:
+        runaway_y = 900
+    else:
+        runaway_y = 0
+    return_target = (380, 400)
+    #where and how ghosts run away during player powerup
+    if powerup:
+        if not orange.dead:
+            orange_target = (runaway_x, runaway_y)
+        else:
+            orange_target = return_target
+        if not pink.dead:
+            pink_target = (player_x, player_y)
+        else:
+            pink_target = return_target
+        if not red.dead:
+            red_target = (runaway_x, runaway_y)
+        else:
+            red_target = return_target
+        if not blue.dead:
+            blue_target = (runaway_x, runaway_y)
+        else:
+            blue_target = return_target
+
+    return target_list
+
+
 run = True
 
 if run == True:
@@ -504,6 +536,7 @@ while run:
 
     
     draw_misc()
+    targets = get_targets(orange_x, orange_y, blue_x, blue_y, pink_x, pink_y, red_x, red_y)
     center_x = player_x + 23
     center_y = player_y + 24
     turns_allowed = check_position(center_x, center_y)
