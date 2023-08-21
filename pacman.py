@@ -462,7 +462,7 @@ def move_player(play_x, play_y):
         play_y += player_speed
     return play_x, play_y
 
-def get_targets():
+def get_targets(orange_x, orange_y, blue_x, blue_y, pink_x, pink_y, red_x, red_y):
     if player_x < 450:
         runaway_x = 980
     else:
@@ -490,8 +490,33 @@ def get_targets():
             blue_target = (runaway_x, runaway_y)
         else:
             blue_target = return_target
+    else:
+        if not orange.dead:
+            if 340 < orange_x < 560 and 380 < orange_y < 500:
+                orange_target = (400, 100)
+            orange_target = (player_x, player_y)
+        else:
+            orange_target = return_target
+        if not pink.dead:
+            if 340 < pink_x < 560 and 380 < pink_y < 500:
+                pink_target = (400, 100)
+            pink_target = (player_x, player_y)
+        else:
+            pink_target = return_target
+        if not red.dead:
+            if 340 < red_x < 560 and 380 < red_y < 500:
+                red_target = (400, 100)
+            red_target = (player_x, player_y)
+        else:
+            red_target = return_target
+        if not blue.dead:
+            if 340 < blue_x < 560 and 380 < blue_y < 500:
+                blue_target = (400, 100)
+            blue_target = (player_x, player_y)
+        else:
+            blue_target = return_target
 
-    return target_list
+    return [orange_target, pink_target, red_target, blue_target]
 
 
 run = True
